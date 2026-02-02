@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<mavlink>
+    <include>common.xml</include>
+    <enums>
+        <enum name="MAV_COMPONENT">
+            <entry value="211" name="MAV_COMP_ID_UNICO_AI_COMPUTER">
+                <description>Uni-Co AI Computer Component ID</description>
+            </entry>
+        </enum>
+        <enum name="MAV_CMD">
+            <entry value="31020" name="MAV_CMD_START_AI_LANDING">
+                <description>Start AI Landing</description>
+                <param index="1">0:single / 1:stream</param>
+                <param index="2">Frequency in Hz (5-10)</param>
+                <param index="3">0:camera frame</param>
+            </entry>
+            <entry value="31021" name="MAV_CMD_STOP_AI_LANDING">
+                <description>Stop AI Landing</description>
+            </entry>
+            <entry value="31022" name="MAV_CMD_START_AI_VISION">
+                <description>Start Fish Detection</description>
+                <param index="1">mode: FISH_DET</param>
+                <param index="2">1:continuous</param>
+                <param index="3">5 Hz</param>
+            </entry>
+            <entry value="31023" name="MAV_CMD_STOP_AI_VISION">
+                <description>Stop Fish Detection</description>
+            </entry>
+        </enum>
+    </enums>
+    <messages>
+        <message id="52100" name="AI_LANDING_CORRECTION">
+            <description>AI Landing Correction Data</description>
+            <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp</field>
+            <field type="float" name="roll_err" units="rad">Roll error</field>
+            <field type="float" name="pitch_err" units="rad">Pitch error</field>
+            <field type="float" name="yaw_err" units="rad">Yaw error</field>
+            <field type="float" name="distance" units="m">Distance</field>
+            <field type="float" name="confidence">Confidence</field>
+            <field type="uint8_t" name="frame">0: CAMERA</field>
+            <field type="uint8_t" name="flags">Flags</field>
+        </message>
+        <message id="52101" name="AI_FISH_DETECTION_RESULT">
+            <description>AI Fish Detection Result</description>
+            <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp</field>
+            <field type="uint16_t" name="image_width" units="px">Width</field>
+            <field type="uint16_t" name="image_height" units="px">Height</field>
+            <field type="uint8_t" name="object_count">Count</field>
+            <field type="uint16_t[10]" name="bbox_x">X</field>
+            <field type="uint16_t[10]" name="bbox_y">Y</field>
+            <field type="uint16_t[10]" name="bbox_w">W</field>
+            <field type="uint16_t[10]" name="bbox_h">H</field>
+            <field type="uint8_t[10]" name="class_id">Class</field>
+            <field type="float[10]" name="confidence">Conf</field>
+        </message>
+        <message id="52102" name="AI_LANDING_STATUS">
+            <description>AI Landing Status</description>
+            <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp</field>
+            <field type="float" name="visual_confidence">Confidence</field>
+            <field type="uint8_t" name="target_lost">Lost</field>
+            <field type="float" name="reproj_error" units="px">Error</field>
+            <field type="float" name="covariance">Cov</field>
+        </message>
+    </messages>
+</mavlink>

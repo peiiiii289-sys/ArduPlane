@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<mavlink>
+    <include>common.xml</include>
+
+    <enums>
+        <enum name="MAV_COMPONENT">
+            <entry value="211" name="MAV_COMP_ID_UNICO_AI_COMPUTER"/>
+        </enum>
+    </enums>
+    <messages>
+        <message id="52100" name="AI_LANDING_CORRECTION">
+            <description>AI 修正資訊： rad, m 單位，頻率 5-10Hz [cite: 816, 841, 1018]</description>
+            <field type="uint32_t" name="time_boot_ms" units="ms">AI 開機時間 [cite: 840]</field>
+            <field type="float" name="roll_err" units="rad">需修正的 Roll [cite: 857]</field>
+            <field type="float" name="pitch_err" units="rad">需修正的 Pitch [cite: 857]</field>
+            <field type="float" name="yaw_err" units="rad">需修正的 Yaw (必填) [cite: 857, 1018]</field>
+            <field type="float" name="distance" units="m">UAV-H點直線距離 [cite: 857, 1018]</field>
+            <field type="float" name="confidence">0-1 信心值 [cite: 857]</field>
+            <field type="uint8_t" name="frame">固定 0: CAMERA [cite: 857]</field>
+            <field type="uint8_t" name="flags">b0:yaw_valid, b1:dist_valid [cite: 857]</field>
+        </message>
+
+        <message id="52101" name="AI_FISH_DETECTION_RESULT">
+            <description>魚群偵測：固定 Top-10 傳輸 [cite: 348, 821, 1045]</description>
+            <field type="uint32_t" name="time_boot_ms" units="ms">AI 開機時間 [cite: 872]</field>
+            <field type="uint16_t" name="image_width" units="px">影像寬度 [cite: 872]</field>
+            <field type="uint16_t" name="image_height" units="px">影像高度 [cite: 872]</field>
+            <field type="uint8_t" name="object_count">目標數量 (不足10個則補0) [cite: 500, 503, 872]</field>
+            <field type="uint16_t[10]" name="bbox_x" units="px">X座標陣列 [cite: 872]</field>
+            <field type="uint16_t[10]" name="bbox_y" units="px">Y座標陣列 [cite: 872]</field>
+            <fiel
